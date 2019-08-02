@@ -3,6 +3,7 @@ const Logger = require('@naturacosmeticos/clio-nodejs-logger');
 const ClientFactory = require('../../../common/aws/client-factory');
 const MessageBusError = require('../../../common/errors/message-bus-error');
 const errorMessages = require('../../../common/errors/messages');
+const AsyncLocalStorage = require('../../../common/async-local-storage');
 
 /**
  * AWS SNS publisher
@@ -30,6 +31,12 @@ class MessageBus {
     try {
       return await sns.publish({
         Message: JSON.stringify(message),
+        MessageAttributes: {
+          'JaegerSpanCtx': {
+            DataType: 'String',
+            StringValue: JSON.stringify(AsyncLocalStorage.getValue('rootSpan')),
+          },
+        },
         TopicArn: this.friendlyNamesToArn[topic],
       }).promise();
     } catch (error) {

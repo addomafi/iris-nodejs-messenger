@@ -7,6 +7,7 @@
     "@naturacosmeticos/clio-nodejs-logger": "^1.0.0",
     "amqplib": "^0.5.2",
     "async": "^2.6.1",
+    "async-local-storage": "^2.1.0",
     "aws-sdk": "^2.271.1",
     "lodash": "^4.17.10",
     "sqs-consumer": "^3.8.0",
